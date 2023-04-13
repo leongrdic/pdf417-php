@@ -24,42 +24,34 @@ class PDF417Test extends TestCase
         $this->assertSame($secLev, $pdf->getSecurityLevel());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Column count must be numeric. Given: foo
-     */
     public function testInvalidColumns1()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Column count must be numeric. Given: foo');
         $pdf = new PDF417();
         $pdf->setColumns("foo");
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Column count must be between 1 and 30. Given: 1000
-     */
     public function testInvalidColumns2()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Column count must be between 1 and 30. Given: 1000');
         $pdf = new PDF417();
         $pdf->setColumns(1000);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Security level must be numeric. Given: foo
-     */
     public function testInvalidSecurityLevel1()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Security level must be numeric. Given: foo');
         $pdf = new PDF417();
         $pdf->setSecurityLevel("foo");
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Security level must be between 0 and 8. Given: 1000
-     */
     public function testInvalidSecurityLevel2()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Security level must be between 0 and 8. Given: 1000');
         $pdf = new PDF417();
         $pdf->setSecurityLevel(1000);
     }
@@ -72,7 +64,7 @@ class PDF417Test extends TestCase
         $pdf = new PDF417();
         $barcodeData = $pdf->encode($data);
 
-        $this->assertInstanceOf("BigFish\\PDF417\\BarcodeData", $barcodeData);
+        $this->assertInstanceOf(\BigFish\PDF417\BarcodeData::class, $barcodeData);
 
         $expectedCWs = [
             142, 227, 637, 601, 902, 130, 900, 865, 479, 227, 328, 765, 902, 1,

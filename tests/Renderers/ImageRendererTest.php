@@ -47,65 +47,51 @@ class ImageRendererTest extends TestCase
         $this->assertNull($actual);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid option "format": "foo".
-     */
     public function testInvalidFormat()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid option "format": "foo".');
         new ImageRenderer(["format" => "foo"]);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid option "scale": "0".
-     */
     public function testInvalidScale()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid option "scale": "0".');
         new ImageRenderer(["scale" => 0]);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid option "ratio": "0".
-     */
     public function testInvalidRatio()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid option "ratio": "0".');
         new ImageRenderer(["ratio" => 0]);
     }
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid option "padding": "-1".
-     */
     public function testInvalidPadding()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid option "padding": "-1".');
         new ImageRenderer(["padding" => -1]);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid option "color": "red".
-     */
     public function testInvalidColor()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid option "color": "red".');
         new ImageRenderer(["color" => "red"]);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid option "bgColor": "red".
-     */
     public function testInvalidBgColor()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid option "bgColor": "red".');
         new ImageRenderer(["bgColor" => "red"]);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid option "quality": "101".
-     */
     public function testInvalidQuality()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid option "quality": "101".');
         new ImageRenderer(["quality" => 101]);
     }
 

@@ -5,7 +5,7 @@ namespace BigFish\PDF417;
 /**
  * Container class which holds all data needed to render a PDF417 bar code.
  */
-class BarcodeData
+final class BarcodeData
 {
     public $codeWords;
     public $columns;

@@ -21,7 +21,7 @@ abstract class AbstractRenderer implements RendererInterface
         }
 
         $errors = $this->validateOptions();
-        if (!empty($errors)) {
+        if ($errors !== []) {
             $errors = implode("\n", $errors);
             throw new \InvalidArgumentException($errors);
         }

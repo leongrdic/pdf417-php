@@ -6,9 +6,9 @@ namespace BigFish\PDF417;
  * Converts high-level (base 929) code words into low-level code words (binary
  * patterns for drawing the bar code).
  */
-class Codes
+final class Codes
 {
-    private static $codes = [
+    private static array $codes = [
         [
             0x1d5c0, 0x1eaf0, 0x1f57c, 0x1d4e0, 0x1ea78, 0x1f53e, 0x1a8c0,
             0x1d470, 0x1a860, 0x15040, 0x1a830, 0x15020, 0x1adc0, 0x1d6f0,

@@ -33,7 +33,7 @@ class SvgRendererTest extends TestCase
 
         // Check it contains the correct doctype
         $doctype = '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">';
-        $this->assertContains($doctype, $string);
+        $this->assertStringContainsString($doctype, $string);
 
         // Check document structure
         $xml = simplexml_load_string($string);

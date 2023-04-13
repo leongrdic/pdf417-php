@@ -5,9 +5,7 @@ namespace BigFish\PDF417\Tests\Encoders;
 use BigFish\PDF417\Encoders\TextEncoder;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group encoders
- */
+#[\PHPUnit\Framework\Attributes\Group('encoders')]
 class TextEncoderTest extends TestCase
 {
     public function testCanEncode()
@@ -64,12 +62,10 @@ class TextEncoderTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Expected first parameter to be a string, array given.
-     */
     public function testInvalidInput()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected first parameter to be a string, array given.');
         $te = new TextEncoder();
         $te->encode([], true);
     }

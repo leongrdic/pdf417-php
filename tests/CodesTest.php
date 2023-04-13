@@ -20,22 +20,20 @@ class CodesTest extends TestCase
     }
 
     /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Invalid code word [0][929]
      *
      * @return [type] [description]
      */
     public function testInvalidCode()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Invalid code word [0][929]');
         $this->assertSame(0x1abe0, Codes::getCode(0, 929));
     }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Invalid code word [3][0]
-     */
     public function testInvalidTable()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Invalid code word [3][0]');
         $this->assertSame(0x1abe0, Codes::getCode(3, 0));
     }
 }

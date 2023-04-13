@@ -5,9 +5,7 @@ namespace BigFish\PDF417\Tests\Encoders;
 use BigFish\PDF417\Encoders\NumberEncoder;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group encoders
- */
+#[\PHPUnit\Framework\Attributes\Group('encoders')]
 class NumberEncoderTest extends TestCase
 {
     public function testCanEncode()
@@ -60,22 +58,18 @@ class NumberEncoderTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Expected first parameter to be a string, array given.
-     */
     public function testInvalidInput1()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected first parameter to be a string, array given.');
         $ne = new NumberEncoder();
         $ne->encode([], true);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage First parameter contains non-numeric characters.
-     */
     public function testInvalidInput2()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('First parameter contains non-numeric characters.');
         $ne = new NumberEncoder();
         $ne->encode("foo", true);
     }

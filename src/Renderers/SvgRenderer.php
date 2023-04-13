@@ -5,7 +5,6 @@ namespace BigFish\PDF417\Renderers;
 use BigFish\PDF417\BarcodeData;
 
 use DOMImplementation;
-use DOMElement;
 
 class SvgRenderer extends AbstractRenderer
 {

@@ -5,9 +5,9 @@ namespace BigFish\PDF417;
 /**
  * Computes the Reed Solomon correction factors.
  */
-class ReedSolomon
+final class ReedSolomon
 {
-    private $factors = [
+    private array $factors = [
 
         // Level 0
         [
@@ -140,7 +140,7 @@ class ReedSolomon
         }
 
         // Number of correction code words
-        $count = pow(2, $level + 1);
+        $count = 2 ** ($level + 1);
 
         // Correction factors for the given level
         $factors = $this->factors[$level];
@@ -152,11 +152,11 @@ class ReedSolomon
         $last = $count - 1;
 
         // Do the math
-        foreach ($data as $key => $value) {
+        foreach ($data as $value) {
             $temp = ($value + $ecWords[$last]) % 929;
 
             for ($i = $last; $i >= 0; $i -= 1) {
-                $add = isset($ecWords[$i - 1]) ? $ecWords[$i - 1] : 0;
+                $add = $ecWords[$i - 1] ?? 0;
                 $ecWords[$i] = ($add + 929 - ($temp * $factors[$i]) % 929) % 929;
             }
         }
