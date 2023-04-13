@@ -12,7 +12,7 @@ class JsonRendererTest extends TestCase
     {
         $renderer = new JsonRenderer();
         $actual = $renderer->getContentType();
-        $expected = "application/json";
+        $expected = 'application/json';
         $this->assertSame($expected, $actual);
     }
 
@@ -26,7 +26,7 @@ class JsonRendererTest extends TestCase
 
         $renderer = new JsonRenderer();
         $actual = $renderer->render($data);
-        $expected = "[[1,0],[0,1]]";
+        $expected = '[[1,0],[0,1]]';
 
         $this->assertSame($expected, $actual);
     }

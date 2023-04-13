@@ -7,23 +7,23 @@ namespace BigFish\PDF417;
  */
 class PDF417
 {
-    const MIN_COLUMNS = 1;
-    const MAX_COLUMNS = 30;
-    const DEFAULT_COLUMNS = 6;
+    public const MIN_COLUMNS = 1;
+    public const MAX_COLUMNS = 30;
+    public const DEFAULT_COLUMNS = 6;
 
-    const MIN_SECURITY_LEVEL = 0;
-    const MAX_SECURITY_LEVEL = 8;
-    const DEFAULT_SECURITY_LEVEL = 2;
+    public const MIN_SECURITY_LEVEL = 0;
+    public const MAX_SECURITY_LEVEL = 8;
+    public const DEFAULT_SECURITY_LEVEL = 2;
 
     // TODO: Check barcode respects rows/codeword limits.
-    const MIN_ROWS = 3;
-    const MAX_ROWS = 90;
-    const MAX_CODE_WORDS = 925;
+    public const MIN_ROWS = 3;
+    public const MAX_ROWS = 90;
+    public const MAX_CODE_WORDS = 925;
 
-    const START_CHARACTER = 0x1fea8;
-    const STOP_CHARACTER  = 0x3fa29;
+    public const START_CHARACTER = 0x1fea8;
+    public const STOP_CHARACTER  = 0x3fa29;
 
-    const PADDING_CODE_WORD = 900;
+    public const PADDING_CODE_WORD = 900;
 
 
     // -- Properties -----------------------------------------------------------

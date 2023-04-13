@@ -29,7 +29,7 @@ class PDF417Test extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Column count must be numeric. Given: foo');
         $pdf = new PDF417();
-        $pdf->setColumns("foo");
+        $pdf->setColumns('foo');
     }
 
     public function testInvalidColumns2()
@@ -45,7 +45,7 @@ class PDF417Test extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Security level must be numeric. Given: foo');
         $pdf = new PDF417();
-        $pdf->setSecurityLevel("foo");
+        $pdf->setSecurityLevel('foo');
     }
 
     public function testInvalidSecurityLevel2()

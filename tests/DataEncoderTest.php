@@ -15,12 +15,12 @@ class DataEncoderTest extends TestCase
         $encoder = new DataEncoder();
 
         // When starting with text, the first code word does not need to be the switch
-        $result = $encoder->encode("ABC123");
+        $result = $encoder->encode('ABC123');
         $this->assertNotEquals($result[0], TextEncoder::SWITCH_CODE_WORD);
         $this->assertEquals([1, 89, 902, 1, 223], $result);
 
         // When starting with numbers, we do need to switch
-        $result = $encoder->encode("123ABC");
+        $result = $encoder->encode('123ABC');
         $this->assertEquals($result[0], NumberEncoder::SWITCH_CODE_WORD);
         $this->assertEquals([902, 1, 223, 900, 1, 89], $result);
 

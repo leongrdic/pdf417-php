@@ -22,8 +22,8 @@ class ByteEncoderTest extends TestCase
         }
 
         // Cannot encode empty strings, non-strings and multi digit strings
-        $this->assertFalse($be->canEncode(""));
-        $this->assertFalse($be->canEncode("foo"));
+        $this->assertFalse($be->canEncode(''));
+        $this->assertFalse($be->canEncode('foo'));
     }
 
     public function testGetSwitchCode()
@@ -33,30 +33,30 @@ class ByteEncoderTest extends TestCase
         $sw1 = ByteEncoder::SWITCH_CODE_WORD;
         $sw2 = ByteEncoder::SWITCH_CODE_WORD_ALT;
 
-        $this->assertSame($sw1, $be->getSwitchCode("1"));
-        $this->assertSame($sw1, $be->getSwitchCode("12"));
-        $this->assertSame($sw1, $be->getSwitchCode("123"));
-        $this->assertSame($sw1, $be->getSwitchCode("1234"));
-        $this->assertSame($sw1, $be->getSwitchCode("12345"));
-        $this->assertSame($sw2, $be->getSwitchCode("123456"));
-        $this->assertSame($sw1, $be->getSwitchCode("1234567"));
-        $this->assertSame($sw1, $be->getSwitchCode("12345678"));
-        $this->assertSame($sw1, $be->getSwitchCode("123456789"));
-        $this->assertSame($sw1, $be->getSwitchCode("1234567890"));
-        $this->assertSame($sw1, $be->getSwitchCode("12345678901"));
-        $this->assertSame($sw2, $be->getSwitchCode("123456789012"));
-        $this->assertSame($sw1, $be->getSwitchCode("1234567890123"));
+        $this->assertSame($sw1, $be->getSwitchCode('1'));
+        $this->assertSame($sw1, $be->getSwitchCode('12'));
+        $this->assertSame($sw1, $be->getSwitchCode('123'));
+        $this->assertSame($sw1, $be->getSwitchCode('1234'));
+        $this->assertSame($sw1, $be->getSwitchCode('12345'));
+        $this->assertSame($sw2, $be->getSwitchCode('123456'));
+        $this->assertSame($sw1, $be->getSwitchCode('1234567'));
+        $this->assertSame($sw1, $be->getSwitchCode('12345678'));
+        $this->assertSame($sw1, $be->getSwitchCode('123456789'));
+        $this->assertSame($sw1, $be->getSwitchCode('1234567890'));
+        $this->assertSame($sw1, $be->getSwitchCode('12345678901'));
+        $this->assertSame($sw2, $be->getSwitchCode('123456789012'));
+        $this->assertSame($sw1, $be->getSwitchCode('1234567890123'));
     }
 
     public function testEncode1()
     {
         $be = new ByteEncoder();
 
-        $actual = $be->encode("alcool", true);
+        $actual = $be->encode('alcool', true);
         $expected = [924, 163, 238, 432, 766, 244];
         $this->assertSame($expected, $actual);
 
-        $actual = $be->encode("alcool", false);
+        $actual = $be->encode('alcool', false);
         $expected = [163, 238, 432, 766, 244];
         $this->assertSame($expected, $actual);
     }
@@ -65,11 +65,11 @@ class ByteEncoderTest extends TestCase
     {
         $be = new ByteEncoder();
 
-        $actual = $be->encode("alcoolique", true);
+        $actual = $be->encode('alcoolique', true);
         $expected = [901, 163, 238, 432, 766, 244, 105, 113, 117, 101];
         $this->assertSame($expected, $actual);
 
-        $actual = $be->encode("alcoolique", false);
+        $actual = $be->encode('alcoolique', false);
         $expected = [163, 238, 432, 766, 244, 105, 113, 117, 101];
         $this->assertSame($expected, $actual);
     }
@@ -78,11 +78,11 @@ class ByteEncoderTest extends TestCase
     {
         $be = new ByteEncoder();
 
-        $actual = $be->encode(base64_decode("UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA=="), true);
+        $actual = $be->encode(base64_decode('UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA=='), true);
         $expected = [901, 134, 501, 627, 198, 376, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         $this->assertSame($expected, $actual);
 
-        $actual = $be->encode(base64_decode("UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA=="), false);
+        $actual = $be->encode(base64_decode('UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA=='), false);
         $expected = [134, 501, 627, 198, 376, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         $this->assertSame($expected, $actual);
     }

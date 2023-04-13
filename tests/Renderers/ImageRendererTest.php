@@ -13,36 +13,36 @@ class ImageRendererTest extends TestCase
     {
         $renderer = new ImageRenderer();
         $actual = $renderer->getContentType();
-        $expected = "image/png";
+        $expected = 'image/png';
         $this->assertSame($expected, $actual);
 
-        $renderer = new ImageRenderer(["format" => "png"]);
+        $renderer = new ImageRenderer(['format' => 'png']);
         $actual = $renderer->getContentType();
-        $expected = "image/png";
+        $expected = 'image/png';
         $this->assertSame($expected, $actual);
 
-        $renderer = new ImageRenderer(["format" => "jpg"]);
+        $renderer = new ImageRenderer(['format' => 'jpg']);
         $actual = $renderer->getContentType();
-        $expected = "image/jpeg";
+        $expected = 'image/jpeg';
         $this->assertSame($expected, $actual);
 
-        $renderer = new ImageRenderer(["format" => "gif"]);
+        $renderer = new ImageRenderer(['format' => 'gif']);
         $actual = $renderer->getContentType();
-        $expected = "image/gif";
+        $expected = 'image/gif';
         $this->assertSame($expected, $actual);
 
-        $renderer = new ImageRenderer(["format" => "bmp"]);
+        $renderer = new ImageRenderer(['format' => 'bmp']);
         $actual = $renderer->getContentType();
-        $expected = "image/bmp";
+        $expected = 'image/bmp';
         $this->assertSame($expected, $actual);
 
-        $renderer = new ImageRenderer(["format" => "tif"]);
+        $renderer = new ImageRenderer(['format' => 'tif']);
         $actual = $renderer->getContentType();
-        $expected = "image/tiff";
+        $expected = 'image/tiff';
         $this->assertSame($expected, $actual);
 
         // data-url format does not have a mime type
-        $renderer = new ImageRenderer(["format" => "data-url"]);
+        $renderer = new ImageRenderer(['format' => 'data-url']);
         $actual = $renderer->getContentType();
         $this->assertNull($actual);
     }
@@ -51,48 +51,48 @@ class ImageRendererTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "format": "foo".');
-        new ImageRenderer(["format" => "foo"]);
+        new ImageRenderer(['format' => 'foo']);
     }
 
     public function testInvalidScale()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "scale": "0".');
-        new ImageRenderer(["scale" => 0]);
+        new ImageRenderer(['scale' => 0]);
     }
 
     public function testInvalidRatio()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "ratio": "0".');
-        new ImageRenderer(["ratio" => 0]);
+        new ImageRenderer(['ratio' => 0]);
     }
     public function testInvalidPadding()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "padding": "-1".');
-        new ImageRenderer(["padding" => -1]);
+        new ImageRenderer(['padding' => -1]);
     }
 
     public function testInvalidColor()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "color": "red".');
-        new ImageRenderer(["color" => "red"]);
+        new ImageRenderer(['color' => 'red']);
     }
 
     public function testInvalidBgColor()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "bgColor": "red".');
-        new ImageRenderer(["bgColor" => "red"]);
+        new ImageRenderer(['bgColor' => 'red']);
     }
 
     public function testInvalidQuality()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "quality": "101".');
-        new ImageRenderer(["quality" => 101]);
+        new ImageRenderer(['quality' => 101]);
     }
 
     public function testRenderPNG()
@@ -120,7 +120,7 @@ class ImageRendererTest extends TestCase
         // Expected dimensions
         $width = 2 * $padding + 2 * $scale;
         $height = 2 * $padding + 2 * $scale * $ratio;
-        $mime = "image/png";
+        $mime = 'image/png';
 
         $this->assertSame($width, $image->width());
         $this->assertSame($height, $image->height());
@@ -130,8 +130,8 @@ class ImageRendererTest extends TestCase
 
     public function testColors()
     {
-        $color = "#ff0000";
-        $bgColor = "#0000ff";
+        $color = '#ff0000';
+        $bgColor = '#0000ff';
 
         $renderer = new ImageRenderer([
             'color' => $color,

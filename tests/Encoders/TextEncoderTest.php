@@ -17,13 +17,13 @@ class TextEncoderTest extends TestCase
 
             $this->assertTrue(
                 $te->canEncode($chr),
-                "Unable to encode: " . var_export($chr, true)
+                'Unable to encode: ' . var_export($chr, true)
             );
         }
 
         // Cannot encode empty strings, non-strings and multi digit strings
-        $this->assertFalse($te->canEncode(""));
-        $this->assertFalse($te->canEncode("foo"));
+        $this->assertFalse($te->canEncode(''));
+        $this->assertFalse($te->canEncode('foo'));
     }
 
     public function testGetSwitchCode()
@@ -31,8 +31,8 @@ class TextEncoderTest extends TestCase
         $te = new TextEncoder();
         $sw = TextEncoder::SWITCH_CODE_WORD;
 
-        $this->assertSame($sw, $te->getSwitchCode("123"));
-        $this->assertSame($sw, $te->getSwitchCode("foo"));
+        $this->assertSame($sw, $te->getSwitchCode('123'));
+        $this->assertSame($sw, $te->getSwitchCode('foo'));
         $this->assertSame($sw, $te->getSwitchCode([]));
     }
 
@@ -40,11 +40,11 @@ class TextEncoderTest extends TestCase
     {
         $te = new TextEncoder();
 
-        $actual = $te->encode("Super !", true);
+        $actual = $te->encode('Super !', true);
         $expected = [900, 567, 615, 137, 808, 760];
         $this->assertSame($expected, $actual);
 
-        $actual = $te->encode("Super !", false);
+        $actual = $te->encode('Super !', false);
         $expected = [567, 615, 137, 808, 760];
         $this->assertSame($expected, $actual);
     }
@@ -53,11 +53,11 @@ class TextEncoderTest extends TestCase
     {
         $te = new TextEncoder();
 
-        $actual = $te->encode("Super ", true);
+        $actual = $te->encode('Super ', true);
         $expected = [900, 567, 615, 137, 809];
         $this->assertSame($expected, $actual);
 
-        $actual = $te->encode("Super ", false);
+        $actual = $te->encode('Super ', false);
         $expected = [567, 615, 137, 809];
         $this->assertSame($expected, $actual);
     }

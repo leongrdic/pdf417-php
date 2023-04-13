@@ -15,7 +15,7 @@ class NumberEncoder implements EncoderInterface
     /**
      * Code word used to switch to Numeric mode.
      */
-    const SWITCH_CODE_WORD = 902;
+    public const SWITCH_CODE_WORD = 902;
 
     /**
      * {@inheritdoc}
@@ -51,7 +51,7 @@ class NumberEncoder implements EncoderInterface
         }
 
         if (!preg_match('/^[0-9]+$/', $digits)) {
-            throw new \InvalidArgumentException("First parameter contains non-numeric characters.");
+            throw new \InvalidArgumentException('First parameter contains non-numeric characters.');
         }
 
         // Count the number of 44 character chunks
@@ -81,14 +81,14 @@ class NumberEncoder implements EncoderInterface
 
     private function encodeChunk($chunk)
     {
-        $chunk = "1" . $chunk;
+        $chunk = '1' . $chunk;
 
         $cws = [];
         while(bccomp($chunk, 0) > 0) {
             $cw = bcmod($chunk, 900);
             $chunk = bcdiv($chunk, 900, 0); // Integer division
 
-            array_unshift($cws, (integer) $cw);
+            array_unshift($cws, (int) $cw);
         }
 
         return $cws;

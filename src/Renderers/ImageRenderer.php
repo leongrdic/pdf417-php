@@ -26,8 +26,8 @@ class ImageRenderer extends AbstractRenderer
         'scale' => 3,
         'ratio' => 3,
         'padding' => 20,
-        'color' => "#000000",
-        'bgColor' => "#ffffff",
+        'color' => '#000000',
+        'bgColor' => '#ffffff',
     ];
 
     /**
@@ -39,7 +39,7 @@ class ImageRenderer extends AbstractRenderer
 
         $format = $this->options['format'];
         if (!array_key_exists($format, $this->formats)) {
-            $formats = implode(", ", array_keys($this->formats));
+            $formats = implode(', ', array_keys($this->formats));
             $errors[] = "Invalid option \"format\": \"$format\". Expected one of: $formats.";
         }
 

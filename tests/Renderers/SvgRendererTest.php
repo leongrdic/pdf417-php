@@ -12,7 +12,7 @@ class SvgRendererTest extends TestCase
     {
         $renderer = new SvgRenderer();
         $actual = $renderer->getContentType();
-        $expected = "image/svg+xml";
+        $expected = 'image/svg+xml';
         $this->assertSame($expected, $actual);
     }
 
@@ -42,10 +42,10 @@ class SvgRendererTest extends TestCase
 
         foreach($xml->g as $group) {
             foreach($group->rect as $rect) {
-                $this->assertSame($scale * $ratio, (integer) $rect['height']);
-                $this->assertSame($scale, (integer) $rect['width']);
-                $this->assertGreaterThanOrEqual(0, (integer) $rect['x']);
-                $this->assertGreaterThanOrEqual(0, (integer) $rect['y']);
+                $this->assertSame($scale * $ratio, (int) $rect['height']);
+                $this->assertSame($scale, (int) $rect['width']);
+                $this->assertGreaterThanOrEqual(0, (int) $rect['x']);
+                $this->assertGreaterThanOrEqual(0, (int) $rect['y']);
             }
         }
     }
@@ -55,7 +55,7 @@ class SvgRendererTest extends TestCase
         $data = new BarcodeData();
         $data->codes = [[true, false],[false, true]];
 
-        $desc = "today is a good day to generate barcodes";
+        $desc = 'today is a good day to generate barcodes';
 
         $renderer = new SvgRenderer([
             'description' => $desc

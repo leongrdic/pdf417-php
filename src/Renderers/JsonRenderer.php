@@ -8,7 +8,7 @@ class JsonRenderer extends AbstractRenderer
 {
     public function getContentType()
     {
-        return "application/json";
+        return 'application/json';
     }
 
     public function render(BarcodeData $data)

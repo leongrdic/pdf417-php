@@ -9,9 +9,8 @@
         "intervention/image": "^2.0"
     },
     "require-dev": {
-        "pestphp/pest": "^2.4",
-        "rector/rector": "^0.15.24",
-        "friendsofphp/php-cs-fixer": "^3.16"
+        "friendsofphp/php-cs-fixer": "^3.16",
+        "pestphp/pest": "^2.4"
     },
     "autoload": {
         "psr-4": {
@@ -24,7 +23,8 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/pest --no-coverage",
+        "fix": "./vendor/bin/php-cs-fixer fix --config=.php_cs.dist.php",
+        "test": "./vendor/bin/pest",
         "test-coverage": "./vendor/bin/pest --coverage"
     },
     "config": {

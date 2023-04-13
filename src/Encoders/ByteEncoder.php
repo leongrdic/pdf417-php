@@ -17,13 +17,13 @@ class ByteEncoder implements EncoderInterface
     /**
      * Code word used to switch to Byte mode.
      */
-    const SWITCH_CODE_WORD = 901;
+    public const SWITCH_CODE_WORD = 901;
 
     /**
      * Alternate code word used to switch to Byte mode; used when number of
      * bytes to encode is divisible by 6.
      */
-    const SWITCH_CODE_WORD_ALT = 924;
+    public const SWITCH_CODE_WORD_ALT = 924;
 
     /**
      * {@inheritdoc}
@@ -90,7 +90,7 @@ class ByteEncoder implements EncoderInterface
      */
     private function encodeChunk($chunk)
     {
-        $sum = "0";
+        $sum = '0';
         for ($i = 0; $i < 6; $i++) {
             $char = substr($chunk, 5 - $i, 1);
             $val = bcmul(bcpow(256, $i), ord($char));
@@ -102,7 +102,7 @@ class ByteEncoder implements EncoderInterface
             $cw = bcmod($sum, 900);
             $sum = bcdiv($sum, 900, 0); // Integer division
 
-            array_unshift($cws, (integer) $cw);
+            array_unshift($cws, (int) $cw);
         }
 
         return $cws;

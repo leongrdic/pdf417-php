@@ -19,85 +19,85 @@ class TextEncoder implements EncoderInterface
     /**
      * Code word used to switch to Text mode.
      */
-    const SWITCH_CODE_WORD = 900;
+    public const SWITCH_CODE_WORD = 900;
 
     /**
      * Since each code word consists of 2 characters, a padding value is
      * needed when encoding a single character. 29 is used as padding because
      * it's a switch in all 4 submodes, and doesn't add any data.
      */
-    const PADDING_VALUE = 29;
+    public const PADDING_VALUE = 29;
 
     // -- Submodes ------------------------------------------------------
 
     /** Uppercase submode. */
-    const SUBMODE_UPPER = "SUBMODE_UPPER";
+    public const SUBMODE_UPPER = 'SUBMODE_UPPER';
 
     /** Lowercase submode. */
-    const SUBMODE_LOWER = "SUBMODE_LOWER";
+    public const SUBMODE_LOWER = 'SUBMODE_LOWER';
 
     /** mixed submode (numbers and some punctuation). */
-    const SUBMODE_MIXED = "SUBMODE_MIXED";
+    public const SUBMODE_MIXED = 'SUBMODE_MIXED';
 
     /** Punctuation submode. */
-    const SUBMODE_PUNCT = "SUBMODE_PUNCT";
+    public const SUBMODE_PUNCT = 'SUBMODE_PUNCT';
 
     // -- Submode switches ----------------------------------------------
 
     /** Switch to uppercase submode. */
-    const SWITCH_UPPER = "SWITCH_UPPER";
+    public const SWITCH_UPPER = 'SWITCH_UPPER';
 
     /** Switch to uppercase submode for a single character. */
-    const SWITCH_UPPER_SINGLE = "SWITCH_UPPER_SINGLE";
+    public const SWITCH_UPPER_SINGLE = 'SWITCH_UPPER_SINGLE';
 
     /** Switch to lowercase submode. */
-    const SWITCH_LOWER = "SWITCH_LOWER";
+    public const SWITCH_LOWER = 'SWITCH_LOWER';
 
     /** Switch to mixed submode. */
-    const SWITCH_MIXED = "SWITCH_MIXED";
+    public const SWITCH_MIXED = 'SWITCH_MIXED';
 
     /** Switch to punctuation submode. */
-    const SWITCH_PUNCT = "SWITCH_PUNCT";
+    public const SWITCH_PUNCT = 'SWITCH_PUNCT';
 
     /** Switch to punctuation submode for a single character. */
-    const SWITCH_PUNCT_SINGLE = "SWITCH_PUNCT_SINGLE";
+    public const SWITCH_PUNCT_SINGLE = 'SWITCH_PUNCT_SINGLE';
 
     // ------------------------------------------------------------------
 
     /** Character codes per submode. */
     private $characterTables = [
         self::SUBMODE_UPPER => [
-            "A", "B", "C", "D", "E", "F", "G", "H", "I",
-            "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-            "S", "T", "U", "V", "W", "X", "Y", "Z", " ",
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+            'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ',
             self::SWITCH_LOWER,
             self::SWITCH_MIXED,
             self::SWITCH_PUNCT_SINGLE
         ],
 
         self::SUBMODE_LOWER => [
-            "a", "b", "c", "d", "e", "f", "g", "h", "i",
-            "j", "k", "l", "m", "n", "o", "p", "q", "r",
-            "s", "t", "u", "v", "w", "x", "y", "z", " ",
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+            'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+            's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ',
             self::SWITCH_UPPER_SINGLE,
             self::SWITCH_MIXED,
             self::SWITCH_PUNCT_SINGLE,
         ],
 
         self::SUBMODE_MIXED => [
-            "0", "1", "2", "3", "4", "5", "6", "7", "8",
-            "9", "&", "\r", "\t", ",", ":", "#", "-", ".",
-            "$", "/", "+", "%", "*", "=", "^",
-            self::SWITCH_PUNCT, " ",
+            '0', '1', '2', '3', '4', '5', '6', '7', '8',
+            '9', '&', "\r", "\t", ',', ':', '#', '-', '.',
+            '$', '/', '+', '%', '*', '=', '^',
+            self::SWITCH_PUNCT, ' ',
             self::SWITCH_LOWER,
             self::SWITCH_UPPER,
             self::SWITCH_PUNCT_SINGLE
         ],
 
         self::SUBMODE_PUNCT => [
-            ";", "<", ">", "@", "[", "\\", "]", "_", "`",
-            "~", "!", "\r", "\t", ",", ":", "\n", "-", ".",
-            "$", "/", "\"", "|", "*", "(", ")", "?", "{", "}", "'",
+            ';', '<', '>', '@', '[', '\\', ']', '_', '`',
+            '~', '!', "\r", "\t", ',', ':', "\n", '-', '.',
+            '$', '/', '"', '|', '*', '(', ')', '?', '{', '}', "'",
             self::SWITCH_UPPER,
         ],
     ];

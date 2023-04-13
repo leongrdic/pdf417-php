@@ -78,7 +78,7 @@ class DataEncoder
      */
     private function splitToChains($data)
     {
-        $chain = "";
+        $chain = '';
         $chains = [];
         $encoder = $this->defaultEncoder;
 
@@ -91,7 +91,7 @@ class DataEncoder
                 // Save & reset chain if not empty
                 if (!empty($chain)) {
                     $chains[] = [$chain, $encoder];
-                    $chain = "";
+                    $chain = '';
                 }
 
                 $encoder = $newEncoder;

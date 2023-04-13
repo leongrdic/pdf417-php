@@ -22,7 +22,7 @@ final class BarcodeData
                 $bin = decbin($value);
                 $len = strlen($bin);
                 for ($i = 0; $i < $len; $i++) {
-                    $pixelRow[] = (boolean) $bin[$i];
+                    $pixelRow[] = (bool) $bin[$i];
                 }
             }
             $pixelGrid[] = $pixelRow;
