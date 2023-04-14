@@ -29,8 +29,8 @@ jobs:
     - uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ matrix.os }}-php${{ matrix.php }}-${{ hashFiles('**/composer.json') }}
+        key: ${{ matrix.os }}-php${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
 
-    - run: composer install --${{ matrix.dependency-version }}
+    - run: composer update --${{ matrix.dependency-version }}
 
     - run: composer run test
