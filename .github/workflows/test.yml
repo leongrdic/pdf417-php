@@ -7,26 +7,40 @@ jobs:
       matrix:
         os: [ ubuntu, windows, macos ]
         php: [ 8.0, 8.1, 8.2 ]
-        dependency-version: [ lowest, stable ]
+        dependencies: [ lowest, stable ]
 
-    name: PHP${{ matrix.php }} (${{ matrix.dependency-version }} deps) on ${{ matrix.os }}
+    name: php${{ matrix.php }} (${{ matrix.dependencies }} deps) on ${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}-latest
+
+    env:
+      extensions: gd, bcmath, fileinfo
 
     steps:
     - uses: actions/checkout@v3
 
+    - uses: shivammathur/cache-extensions@v1
+      id: php-ext-cache
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: ${{ env.extensions }}
+        key: php-ext
+
+    - uses: actions/cache@v3
+      with:
+        path: ${{ steps.php-ext-cache.outputs.dir }}
+        key: ${{ steps.php-ext-cache.outputs.key }}
+
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        coverage: xdebug
-        extensions: gd, bcmath, fileinfo
+        extensions: ${{ env.extensions }}
 
     - uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ matrix.os }}-php${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
+        key: ${{ matrix.os }}-php${{ matrix.php }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
 
-    - run: composer update --prefer-${{ matrix.dependency-version }}
+    - run: composer update --prefer-${{ matrix.dependencies }}
 
     - run: composer run test
