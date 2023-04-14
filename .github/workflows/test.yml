@@ -1,0 +1,35 @@
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        php: [ 8.0, 8.1, 8.2 ]
+        dependency-version: [ prefer-lowest, prefer-stable ]
+
+    name: PHP${{ matrix.php }} (${{ matrix.dependency-version }}) on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        coverage: xdebug
+
+    - uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ matrix.os }}-php${{ matrix.php }}-${{ hashFiles('**/composer.json') }}
+
+    - run: composer install --${{ matrix.dependency-version }}
+
+    - run: composer run test
