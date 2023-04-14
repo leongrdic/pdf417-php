@@ -1,6 +1,8 @@
 <?php
 
-namespace BigFish\PDF417;
+namespace Le\PDF417;
+
+use Le\PDF417\Encoder\EncoderInterface;
 
 /**
  * Encodes data into PDF417 code words.
@@ -18,9 +20,9 @@ class DataEncoder
     {
         // Encoders sorted in order of preference
         $this->encoders = [
-            new Encoders\NumberEncoder(),
-            new Encoders\TextEncoder(),
-            new Encoders\ByteEncoder(),
+            new Encoder\NumberEncoder(),
+            new Encoder\TextEncoder(),
+            new Encoder\ByteEncoder(),
         ];
 
         // Default mode is Text
@@ -49,7 +51,7 @@ class DataEncoder
         // Add a switch code at the beginning if the first encoder to be used
         // is not the text encoder. Decoders by default start decoding as text.
         $firstEncoder = $chains[0][1];
-        $addSwitchCode = (!($firstEncoder instanceof Encoders\TextEncoder));
+        $addSwitchCode = (!($firstEncoder instanceof Encoder\TextEncoder));
 
         $codes = [];
         foreach ($chains as $chEnc) {

@@ -1,12 +1,10 @@
 <?php
 
-namespace BigFish\PDF417\Renderers;
+namespace Le\PDF417\Renderer;
 
-use BigFish\PDF417\BarcodeData;
-use BigFish\PDF417\RendererInterface;
-
-use Intervention\Image\ImageManager;
+use Le\PDF417\BarcodeData;
 use Intervention\Image\Gd\Color;
+use Intervention\Image\ImageManager;
 
 class ImageRenderer extends AbstractRenderer
 {

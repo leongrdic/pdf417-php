@@ -1,6 +1,6 @@
 <?php
 
-namespace BigFish\PDF417;
+namespace Le\PDF417\Util;
 
 /**
  * Computes the Reed Solomon correction factors.

@@ -1,6 +1,6 @@
 <?php
 
-namespace BigFish\PDF417;
+namespace Le\PDF417\Util;
 
 /**
  * Converts high-level (base 929) code words into low-level code words (binary

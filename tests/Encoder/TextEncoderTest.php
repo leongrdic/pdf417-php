@@ -1,8 +1,8 @@
 <?php
 
-namespace BigFish\PDF417\Tests\Encoders;
+namespace Le\PDF417\Tests\Encoder;
 
-use BigFish\PDF417\Encoders\TextEncoder;
+use Le\PDF417\Encoder\TextEncoder;
 use PHPUnit\Framework\TestCase;
 
 #[\PHPUnit\Framework\Attributes\Group('encoders')]

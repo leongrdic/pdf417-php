@@ -1,6 +1,6 @@
 <?php
 
-namespace BigFish\PDF417;
+namespace Le\PDF417;
 
 /**
  * Container class which holds all data needed to render a PDF417 bar code.

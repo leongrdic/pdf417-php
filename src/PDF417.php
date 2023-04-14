@@ -1,6 +1,9 @@
 <?php
 
-namespace BigFish\PDF417;
+namespace Le\PDF417;
+
+use Le\PDF417\Util\Codes;
+use Le\PDF417\Util\ReedSolomon;
 
 /**
  * Constructs a PDF417 barcodes.

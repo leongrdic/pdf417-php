@@ -1,8 +1,8 @@
 <?php
 
-namespace BigFish\PDF417\Tests;
+namespace Le\PDF417\Tests;
 
-use BigFish\PDF417\Codes;
+use Le\PDF417\Util\Codes;
 use PHPUnit\Framework\TestCase;
 
 class CodesTest extends TestCase

@@ -1,8 +1,6 @@
 <?php
 
-namespace BigFish\PDF417\Encoders;
-
-use BigFish\PDF417\EncoderInterface;
+namespace Le\PDF417\Encoder;
 
 /**
  * Converts a byte array to code words.

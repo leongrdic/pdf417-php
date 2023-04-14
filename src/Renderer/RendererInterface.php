@@ -1,6 +1,8 @@
 <?php
 
-namespace BigFish\PDF417;
+namespace Le\PDF417\Renderer;
+
+use Le\PDF417\BarcodeData;
 
 interface RendererInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BigFish\PDF417\Tests\Renderers;
+namespace Le\PDF417\Tests\Renderer;
 
-use BigFish\PDF417\BarcodeData;
-use BigFish\PDF417\Renderers\ImageRenderer;
+use Le\PDF417\BarcodeData;
+use Le\PDF417\Renderer\ImageRenderer;
 use Intervention\Image\ImageManager;
 use PHPUnit\Framework\TestCase;
 
