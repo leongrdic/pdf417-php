@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ReedSolomonTest extends TestCase
 {
-    #[\PHPUnit\Framework\Attributes\DataProvider('computeProvider')]
+    /** @dataProvider computeProvider */
     public function testCompute($data, $level, $ecWords)
     {
         $rs = new ReedSolomon();

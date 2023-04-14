@@ -1,22 +1,17 @@
-on:
-  workflow_dispatch:
-  pull_request:
-  push:
-    paths:
-      - 'src/**'
-      - 'tests/**'
+on: [workflow_dispatch, push, pull_request]
 
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu, windows, macos ]
         php: [ 8.0, 8.1, 8.2 ]
-        dependency-version: [ prefer-lowest, prefer-stable ]
+        dependency-version: [ lowest, stable ]
 
-    name: PHP${{ matrix.php }} (${{ matrix.dependency-version }}) on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: PHP${{ matrix.php }} (${{ matrix.dependency-version }} deps) on ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -25,12 +20,13 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         coverage: xdebug
+        extensions: gd, bcmath, fileinfo
 
     - uses: actions/cache@v3
       with:
         path: vendor
         key: ${{ matrix.os }}-php${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
 
-    - run: composer update --${{ matrix.dependency-version }}
+    - run: composer update --prefer-${{ matrix.dependency-version }}
 
     - run: composer run test
