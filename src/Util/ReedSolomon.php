@@ -2,6 +2,8 @@
 
 namespace Le\PDF417\Util;
 
+use InvalidArgumentException;
+
 /**
  * Computes the Reed Solomon correction factors.
  */
@@ -129,14 +131,14 @@ final class ReedSolomon
      * Computes the solomon reed correction codewords for given data code words.
      *
      * @param  array   $data  Data code words.
-     * @param  integer $level Correction level (0-8).
+     * @param integer $level Correction level (0-8).
      * @return array          Correction code words.
      */
-    public function compute(array $data, $level)
+    public function compute(array $data, int $level): array
     {
         if (!isset($this->factors[$level])) {
             $msg = sprintf('Invalid correction level given: "%s". Valid values are 0-8.', $level);
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
 
         // Number of correction code words

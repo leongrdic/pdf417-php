@@ -4,11 +4,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-dom": "*",
         "ext-gd": "*",
         "ext-bcmath": "*",
         "intervention/image": "^2.7"
     },
     "require-dev": {
+        "ext-simplexml": "*",
         "friendsofphp/php-cs-fixer": "^3.16",
         "phpunit/phpunit": "^9.6"
     },

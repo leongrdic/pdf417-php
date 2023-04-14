@@ -2,10 +2,10 @@
 
 namespace Le\PDF417\Tests\Encoder;
 
+use InvalidArgumentException;
 use Le\PDF417\Encoder\ByteEncoder;
 use PHPUnit\Framework\TestCase;
 
-#[\PHPUnit\Framework\Attributes\Group('encoders')]
 class ByteEncoderTest extends TestCase
 {
     public function testCanEncode()
@@ -56,7 +56,7 @@ class ByteEncoderTest extends TestCase
         $expected = [924, 163, 238, 432, 766, 244];
         $this->assertSame($expected, $actual);
 
-        $actual = $be->encode('alcool', false);
+        $actual = $be->encode('alcool');
         $expected = [163, 238, 432, 766, 244];
         $this->assertSame($expected, $actual);
     }
@@ -69,7 +69,7 @@ class ByteEncoderTest extends TestCase
         $expected = [901, 163, 238, 432, 766, 244, 105, 113, 117, 101];
         $this->assertSame($expected, $actual);
 
-        $actual = $be->encode('alcoolique', false);
+        $actual = $be->encode('alcoolique');
         $expected = [163, 238, 432, 766, 244, 105, 113, 117, 101];
         $this->assertSame($expected, $actual);
     }
@@ -82,14 +82,14 @@ class ByteEncoderTest extends TestCase
         $expected = [901, 134, 501, 627, 198, 376, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         $this->assertSame($expected, $actual);
 
-        $actual = $be->encode(base64_decode('UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA=='), false);
+        $actual = $be->encode(base64_decode('UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA=='));
         $expected = [134, 501, 627, 198, 376, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         $this->assertSame($expected, $actual);
     }
 
     public function testInvalidInput()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected first parameter to be a string, array given.');
         $be = new ByteEncoder();
         $be->encode([], true);

@@ -6,5 +6,7 @@ use Le\PDF417\BarcodeData;
 
 interface RendererInterface
 {
-    public function render(BarcodeData $data);
+    public function getContentType(): ?string;
+
+    public function render(BarcodeData $data): mixed;
 }

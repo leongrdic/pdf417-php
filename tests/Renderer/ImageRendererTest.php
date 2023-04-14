@@ -2,6 +2,7 @@
 
 namespace Le\PDF417\Tests\Renderer;
 
+use InvalidArgumentException;
 use Le\PDF417\BarcodeData;
 use Le\PDF417\Renderer\ImageRenderer;
 use Intervention\Image\ImageManager;
@@ -11,15 +12,16 @@ class ImageRendererTest extends TestCase
 {
     public function testContentType()
     {
+        $expected = 'image/png';
+
         $renderer = new ImageRenderer();
         $actual = $renderer->getContentType();
-        $expected = 'image/png';
         $this->assertSame($expected, $actual);
 
         $renderer = new ImageRenderer(['format' => 'png']);
         $actual = $renderer->getContentType();
-        $expected = 'image/png';
         $this->assertSame($expected, $actual);
+
 
         $renderer = new ImageRenderer(['format' => 'jpg']);
         $actual = $renderer->getContentType();
@@ -49,48 +51,48 @@ class ImageRendererTest extends TestCase
 
     public function testInvalidFormat()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "format": "foo".');
         new ImageRenderer(['format' => 'foo']);
     }
 
     public function testInvalidScale()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "scale": "0".');
         new ImageRenderer(['scale' => 0]);
     }
 
     public function testInvalidRatio()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "ratio": "0".');
         new ImageRenderer(['ratio' => 0]);
     }
     public function testInvalidPadding()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "padding": "-1".');
         new ImageRenderer(['padding' => -1]);
     }
 
     public function testInvalidColor()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "color": "red".');
         new ImageRenderer(['color' => 'red']);
     }
 
     public function testInvalidBgColor()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "bgColor": "red".');
         new ImageRenderer(['bgColor' => 'red']);
     }
 
     public function testInvalidQuality()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid option "quality": "101".');
         new ImageRenderer(['quality' => 101]);
     }

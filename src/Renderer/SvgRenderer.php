@@ -2,26 +2,21 @@
 
 namespace Le\PDF417\Renderer;
 
+use DOMDocument;
 use Le\PDF417\BarcodeData;
 
 use DOMImplementation;
 
 class SvgRenderer extends AbstractRenderer
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected $options = [
+    protected array $options = [
         'scale' => 3,
         'ratio' => 3,
         'color' => '#000',
         'description' => null,
     ];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validateOptions()
+    public function validateOptions(): array
     {
         $errors = [];
 
@@ -38,18 +33,12 @@ class SvgRenderer extends AbstractRenderer
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContentType()
+    public function getContentType(): ?string
     {
         return 'image/svg+xml';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function render(BarcodeData $data)
+    public function render(BarcodeData $data): string
     {
         $pixelGrid = $data->getPixelGrid();
         $height = count($pixelGrid);
@@ -111,7 +100,7 @@ class SvgRenderer extends AbstractRenderer
     }
 
     /** Creates a DOMDocument for SVG. */
-    protected function createDocument()
+    protected function createDocument(): bool|DOMDocument
     {
         $impl = new DOMImplementation();
 

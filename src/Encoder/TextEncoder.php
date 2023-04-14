@@ -2,6 +2,9 @@
 
 namespace Le\PDF417\Encoder;
 
+use Exception;
+use InvalidArgumentException;
+
 /**
  * Converts text to code words.
  *
@@ -63,7 +66,7 @@ class TextEncoder implements EncoderInterface
     // ------------------------------------------------------------------
 
     /** Character codes per submode. */
-    private $characterTables = [
+    private array $characterTables = [
         self::SUBMODE_UPPER => [
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
             'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
@@ -101,7 +104,7 @@ class TextEncoder implements EncoderInterface
     ];
 
     /** Describes how to switch between submodes (can require two switches). */
-    private $switching = [
+    private array $switching = [
         self::SUBMODE_UPPER => [
             self::SUBMODE_LOWER => [self::SWITCH_LOWER],
             self::SUBMODE_MIXED => [self::SWITCH_MIXED],
@@ -125,7 +128,7 @@ class TextEncoder implements EncoderInterface
     ];
 
     /** Describes which switch changes to which submode. */
-    private $switchSubmode = [
+    private array $switchSubmode = [
         self::SWITCH_UPPER => self::SUBMODE_UPPER,
         self::SWITCH_LOWER => self::SUBMODE_LOWER,
         self::SWITCH_PUNCT => self::SUBMODE_PUNCT,
@@ -136,47 +139,35 @@ class TextEncoder implements EncoderInterface
      * Reverse lookup array. Indexed by $charater, then by $submode, gives the
      * code (row) of the character in that submode.
      */
-    private $reverseLookup;
+    private array $reverseLookup;
 
     public function __construct()
     {
         $this->populateReverseLookup();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function canEncode($char)
+    public function canEncode(mixed $char): bool
     {
         return isset($this->reverseLookup[$char]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSwitchCode($data)
+    public function getSwitchCode(mixed $data): int
     {
         return self::SWITCH_CODE_WORD;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function encode($text, $addSwitchCode)
+    public function encode(mixed $data, bool $addSwitchCode = false): array
     {
-        if (!is_string($text)) {
-            $type = gettype($text);
-            throw new \InvalidArgumentException("Expected first parameter to be a string, $type given.");
+        if (!is_string($data)) {
+            $type = gettype($data);
+            throw new InvalidArgumentException("Expected first parameter to be a string, $type given.");
         }
 
-        $interim = $this->encodeInterim($text);
+        $interim = $this->encodeInterim($data);
         return $this->encodeFinal($interim, $addSwitchCode);
     }
 
-    /**
-     * Converts the given text to interim codes from the character tables.
-     */
-    private function encodeInterim($text)
+    private function encodeInterim(string $text): array
     {
         // The default sub-mode is uppercase
         $submode = self::SUBMODE_UPPER;
@@ -210,7 +201,7 @@ class TextEncoder implements EncoderInterface
     /**
      * Converts the interim code to code words.
      */
-    private function encodeFinal($codes, $addSwitchCode)
+    private function encodeFinal(array $codes, bool $addSwitchCode): array
     {
         $codeWords = [];
 
@@ -221,7 +212,7 @@ class TextEncoder implements EncoderInterface
         // Two letters per CW
         $chunks = array_chunk($codes, 2);
 
-        foreach ($chunks as $key => $chunk) {
+        foreach ($chunks as $chunk) {
 
             // Add padding if single char in chunk
             if (count($chunk) == 1) {
@@ -235,16 +226,16 @@ class TextEncoder implements EncoderInterface
     }
 
     /** Returns code for given character in given submode. */
-    private function getCharacterCode($char, $submode)
+    private function getCharacterCode(string $char, string $submode)
     {
         if (!isset($this->reverseLookup[$char])) {
             $ord = ord($char);
-            throw new \Exception("Character [$char] (ASCII $ord) cannot be encoded.");
+            throw new Exception("Character [$char] (ASCII $ord) cannot be encoded.");
         }
 
         if (!isset($this->reverseLookup[$char][$submode])) {
             $ord = ord($char);
-            throw new \Exception("Character [$char] (ASCII $ord) cannot be encoded in submode [$submode].");
+            throw new Exception("Character [$char] (ASCII $ord) cannot be encoded in submode [$submode].");
         }
 
         return $this->reverseLookup[$char][$submode];
@@ -253,7 +244,7 @@ class TextEncoder implements EncoderInterface
     /**
      * Builds `$this->lookup` based on data in `$this->characterTables`.
      */
-    private function populateReverseLookup()
+    private function populateReverseLookup(): void
     {
         foreach ($this->characterTables as $submode => $codes) {
             foreach ($codes as $row => $char) {
@@ -268,7 +259,7 @@ class TextEncoder implements EncoderInterface
     /**
      * Returns true if given character can be encoded in given submode.
      */
-    private function existsInSubmode($char, $submode)
+    private function existsInSubmode(string $char, string $submode): bool
     {
         return isset($this->reverseLookup[$char][$submode]);
     }
@@ -276,10 +267,10 @@ class TextEncoder implements EncoderInterface
     /**
      * Returns an array of one or two code for switching between given submodes.
      */
-    private function getSwitchCodes($from, $to)
+    private function getSwitchCodes(string $from, string $to): array
     {
         if (!isset($this->switching[$from][$to])) {
-            throw new \Exception("Cannot find switching codes from [$from] to [$to].");
+            throw new Exception("Cannot find switching codes from [$from] to [$to].");
         }
 
         $switches = $this->switching[$from][$to];
@@ -299,11 +290,11 @@ class TextEncoder implements EncoderInterface
      * If the character exists in multiple submodes, returns the first one, as
      * ordered in $this->characterTables.
      */
-    private function getSubmode($char)
+    private function getSubmode($char): string
     {
         if (!isset($this->reverseLookup[$char])) {
             $ord = ord($char);
-            throw new \Exception("Cannot encode character [$char] (ASCII $ord).");
+            throw new Exception("Cannot encode character [$char] (ASCII $ord).");
         }
 
         $source = $this->reverseLookup[$char];

@@ -2,10 +2,10 @@
 
 namespace Le\PDF417\Tests\Encoder;
 
+use InvalidArgumentException;
 use Le\PDF417\Encoder\TextEncoder;
 use PHPUnit\Framework\TestCase;
 
-#[\PHPUnit\Framework\Attributes\Group('encoders')]
 class TextEncoderTest extends TestCase
 {
     public function testCanEncode()
@@ -44,7 +44,7 @@ class TextEncoderTest extends TestCase
         $expected = [900, 567, 615, 137, 808, 760];
         $this->assertSame($expected, $actual);
 
-        $actual = $te->encode('Super !', false);
+        $actual = $te->encode('Super !');
         $expected = [567, 615, 137, 808, 760];
         $this->assertSame($expected, $actual);
     }
@@ -57,14 +57,14 @@ class TextEncoderTest extends TestCase
         $expected = [900, 567, 615, 137, 809];
         $this->assertSame($expected, $actual);
 
-        $actual = $te->encode('Super ', false);
+        $actual = $te->encode('Super ');
         $expected = [567, 615, 137, 809];
         $this->assertSame($expected, $actual);
     }
 
     public function testInvalidInput()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected first parameter to be a string, array given.');
         $te = new TextEncoder();
         $te->encode([], true);

@@ -15,7 +15,7 @@ class ReedSolomonTest extends TestCase
         $this->assertSame($ecWords, $rs->compute($data, $level));
     }
 
-    public static function computeProvider()
+    public static function computeProvider(): array
     {
         $data = [
             16, 902, 1, 278, 827, 900, 295, 902,

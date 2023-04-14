@@ -2,6 +2,7 @@
 
 namespace Le\PDF417;
 
+use InvalidArgumentException;
 use Le\PDF417\Util\Codes;
 use Le\PDF417\Util\ReedSolomon;
 
@@ -39,107 +40,82 @@ class PDF417
      *
      * Valid values are between 3 and 30, defaults to 6.
      *
-     * @var integer
      */
-    private $columns = self::DEFAULT_COLUMNS;
+    private int $columns = self::DEFAULT_COLUMNS;
 
     /**
      * The security level to use for Reed Solomon error correction.
      *
      * Valid values are between 0 and 8, defaults to 2.
-     *
-     * @var integer
      */
-    private $securityLevel = self::DEFAULT_SECURITY_LEVEL;
+    private int $securityLevel = self::DEFAULT_SECURITY_LEVEL;
 
     /**
      * Can be used to force binary encoding. This may reduce size of the
      * barcode if the data contains many encoder changes, such as when
      * encoding a compressed file.
-     *
-     * @var boolean
      */
-    private $forceBinaryEncoding = false;
+    private bool $forceBinaryEncoding = false;
 
     // -- Accessors ------------------------------------------------------------
 
     /**
      * Returns the column count.
-     *
-     * @return integer
      */
-    public function getColumns()
+    public function getColumns(): int
     {
         return $this->columns;
     }
 
     /**
      * Sets the column count.
-     *
-     * @param integer $columns
      */
-    public function setColumns($columns)
+    public function setColumns(int $columns): void
     {
         $min = self::MIN_COLUMNS;
         $max = self::MAX_COLUMNS;
 
-        if (!is_numeric($columns)) {
-            throw new \InvalidArgumentException("Column count must be numeric. Given: $columns");
-        }
-
         if ($columns < $min || $columns > $max) {
-            throw new \InvalidArgumentException("Column count must be between $min and $max. Given: $columns");
+            throw new InvalidArgumentException("Column count must be between $min and $max. Given: $columns");
         }
 
-        $this->columns = intval($columns);
+        $this->columns = $columns;
     }
 
     /**
      * Returns the security level.
-     *
-     * @return integer
      */
-    public function getSecurityLevel()
+    public function getSecurityLevel(): int
     {
         return $this->securityLevel;
     }
 
     /**
      * Sets the security level.
-     *
-     * @param integer $securityLevel
      */
-    public function setSecurityLevel($securityLevel)
+    public function setSecurityLevel(int $securityLevel): void
     {
         $min = self::MIN_SECURITY_LEVEL;
         $max = self::MAX_SECURITY_LEVEL;
 
-        if (!is_numeric($securityLevel)) {
-            throw new \InvalidArgumentException("Security level must be numeric. Given: $securityLevel");
-        }
-
         if ($securityLevel < $min || $securityLevel > $max) {
-            throw new \InvalidArgumentException("Security level must be between $min and $max. Given: $securityLevel");
+            throw new InvalidArgumentException("Security level must be between $min and $max. Given: $securityLevel");
         }
 
-        $this->securityLevel = intval($securityLevel);
+        $this->securityLevel = $securityLevel;
     }
 
     /**
      * Returns whether the binary encoding is forced or not.
-     *
-     * @return integer
      */
-    public function getForceBinary()
+    public function getForceBinary(): bool
     {
         return $this->forceBinaryEncoding;
     }
     /**
      * Force or not the binary encoding for the whole data.
-     *
-     * @param boolean $force
      */
-    public function setForceBinary($force = true)
+    public function setForceBinary(bool $force = true): void
     {
         $this->forceBinaryEncoding = $force;
     }
@@ -148,11 +124,8 @@ class PDF417
 
     /**
      * Encodes the given data to low level code words.
-     *
-     * @param  string $data
-     * @return BarcodeData
      */
-    public function encode($data)
+    public function encode(string $data): BarcodeData
     {
         $codeWords = $this->encodeData($data);
         $secLev = $this->securityLevel;
@@ -201,7 +174,7 @@ class PDF417
     }
 
     /** Encodes data to a grid of codewords for constructing the barcode. */
-    public function encodeData($data)
+    public function encodeData(string $data): array
     {
         $columns = $this->columns;
         $secLev = $this->securityLevel;
@@ -233,7 +206,7 @@ class PDF417
 
     // -------------------------------------------------------------------------
 
-    private function getLeftCodeWord($rowNum, $rows, $columns, $secLev)
+    private function getLeftCodeWord(int $rowNum, int $rows, int $columns, int $secLev): float|int
     {
         // Table used to encode this row
         $tableID = $rowNum % 3;
@@ -254,7 +227,7 @@ class PDF417
         return 30 * intval($rowNum / 3) + $x;
     }
 
-    private function getRightCodeWord($rowNum, $rows, $columns, $secLev)
+    private function getRightCodeWord(int $rowNum, int $rows, int $columns, int $secLev): float|int
     {
         $tableID = $rowNum % 3;
 
@@ -274,7 +247,7 @@ class PDF417
         return 30 * intval($rowNum / 3) + $x;
     }
 
-    private function getPadding($dataCount, $ecCount, $columns)
+    private function getPadding(int $dataCount, int $ecCount, int $columns): array
     {
         // Total number of data words and error correction words, additionally
         // reserve 1 code word for the length descriptor

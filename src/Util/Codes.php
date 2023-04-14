@@ -2,6 +2,8 @@
 
 namespace Le\PDF417\Util;
 
+use Exception;
+
 /**
  * Converts high-level (base 929) code words into low-level code words (binary
  * patterns for drawing the bar code).
@@ -420,14 +422,14 @@ final class Codes
      * Returns a low-level code work corresponding to the given high-level code
      * word in the given table.
      *
-     * @param  integer $table The table to look in (0-2).
-     * @param  integer $word  The code word to encode (0-928).
+     * @param integer $table The table to look in (0-2).
+     * @param integer $word  The code word to encode (0-928).
      * @return integer        The encoded code word.
      */
-    public static function getCode($table, $word)
+    public static function getCode(int $table, int $word): int
     {
         if (!isset(self::$codes[$table][$word])) {
-            throw new \Exception("Invalid code word [$table][$word].");
+            throw new Exception("Invalid code word [$table][$word].");
         }
 
         return self::$codes[$table][$word];

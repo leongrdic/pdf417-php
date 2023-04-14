@@ -2,6 +2,8 @@
 
 namespace Le\PDF417\Renderer;
 
+use Exception;
+use Intervention\Image\Image;
 use Le\PDF417\BarcodeData;
 use Intervention\Image\Gd\Color;
 use Intervention\Image\ImageManager;
@@ -9,7 +11,7 @@ use Intervention\Image\ImageManager;
 class ImageRenderer extends AbstractRenderer
 {
     /** Supported image formats and corresponding MIME types. */
-    protected $formats = [
+    protected array $formats = [
         'jpg' => 'image/jpeg',
         'png' => 'image/png',
         'gif' => 'image/gif',
@@ -18,7 +20,7 @@ class ImageRenderer extends AbstractRenderer
         'data-url' => null,
     ];
 
-    protected $options = [
+    protected array $options = [
         'format' => 'png',
         'quality' => 90,
         'scale' => 3,
@@ -28,10 +30,7 @@ class ImageRenderer extends AbstractRenderer
         'bgColor' => '#ffffff',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validateOptions()
+    public function validateOptions(): array
     {
         $errors = [];
 
@@ -69,34 +68,26 @@ class ImageRenderer extends AbstractRenderer
 
         try {
             $gdColor->parse($color);
-        } catch (\Exception $ex) {
+        } catch (Exception) {
             $errors[] = "Invalid option \"color\": \"$color\". Supported color formats: \"#000000\", \"rgb(0,0,0)\", or \"rgba(0,0,0,0)\"";
         }
 
         try {
             $gdColor->parse($bgColor);
-        } catch (\Exception $ex) {
+        } catch (Exception) {
             $errors[] = "Invalid option \"bgColor\": \"$bgColor\". Supported color formats: \"#000000\", \"rgb(0,0,0)\", or \"rgba(0,0,0,0)\"";
         }
 
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContentType()
+    public function getContentType(): ?string
     {
         $format = $this->options['format'];
         return $this->formats[$format];
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return \Intervention\Image\Image
-     */
-    public function render(BarcodeData $data)
+    public function render(BarcodeData $data): Image
     {
         $pixelGrid = $data->getPixelGrid();
         $height = count($pixelGrid);

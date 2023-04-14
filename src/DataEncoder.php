@@ -2,6 +2,7 @@
 
 namespace Le\PDF417;
 
+use Exception;
 use Le\PDF417\Encoder\EncoderInterface;
 
 /**
@@ -12,9 +13,9 @@ use Le\PDF417\Encoder\EncoderInterface;
  */
 class DataEncoder
 {
-    private $encoders;
-    private $defaultEncoder;
-    private $forceBinary;
+    private array $encoders;
+    private EncoderInterface $defaultEncoder;
+    private bool $forceBinary;
 
     public function __construct($forceBinary = false)
     {
@@ -41,10 +42,8 @@ class DataEncoder
      * each separate character (the one that encodes it to the least bytes).
      *
      * TODO: create a better algorithm
-     *
-     * @param string $data The data to encode.
      */
-    public function encode($data)
+    public function encode(string $data): array
     {
         $chains = $this->splitToChains($data);
 
@@ -74,11 +73,8 @@ class DataEncoder
      *
      * TODO: Currently always switches to the best encoder, even if it's just
      * for one character, consider a better algorithm.
-     *
-     * @param  string $data String to split into chains.
-     * @return array        An array of [$chain, $encoder] pairs.
      */
-    private function splitToChains($data)
+    private function splitToChains(string $data): array
     {
         $chain = '';
         $chains = [];
@@ -109,7 +105,7 @@ class DataEncoder
         return $chains;
     }
 
-    public function getEncoder($char)
+    public function getEncoder(string $char): EncoderInterface
     {
         if ($this->forceBinary) {
             return $this->encoders[2];
@@ -122,18 +118,6 @@ class DataEncoder
         }
 
         $ord = ord($char);
-        throw new \Exception("Cannot encode character $char (ASCII $ord)");
-    }
-
-    private function encodeChain($chain, EncoderInterface $encoder, array &$codes)
-    {
-        if (empty($chain)) {
-            return;
-        }
-
-        $encoded = $encoder->encode($chain);
-        foreach ($encoded as $code) {
-            $codes[] = $code;
-        }
+        throw new Exception("Cannot encode character $char (ASCII $ord)");
     }
 }

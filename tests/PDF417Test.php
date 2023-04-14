@@ -2,6 +2,8 @@
 
 namespace Le\PDF417\Tests;
 
+use InvalidArgumentException;
+use Le\PDF417\BarcodeData;
 use Le\PDF417\PDF417;
 use PHPUnit\Framework\TestCase;
 
@@ -23,33 +25,17 @@ class PDF417Test extends TestCase
         $this->assertSame($secLev, $pdf->getSecurityLevel());
     }
 
-    public function testInvalidColumns1()
+    public function testInvalidColumns()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Column count must be numeric. Given: foo');
-        $pdf = new PDF417();
-        $pdf->setColumns('foo');
-    }
-
-    public function testInvalidColumns2()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Column count must be between 1 and 30. Given: 1000');
         $pdf = new PDF417();
         $pdf->setColumns(1000);
     }
 
-    public function testInvalidSecurityLevel1()
+    public function testInvalidSecurityLevel()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Security level must be numeric. Given: foo');
-        $pdf = new PDF417();
-        $pdf->setSecurityLevel('foo');
-    }
-
-    public function testInvalidSecurityLevel2()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Security level must be between 0 and 8. Given: 1000');
         $pdf = new PDF417();
         $pdf->setSecurityLevel(1000);
@@ -63,7 +49,7 @@ class PDF417Test extends TestCase
         $pdf = new PDF417();
         $barcodeData = $pdf->encode($data);
 
-        $this->assertInstanceOf(\Le\PDF417\BarcodeData::class, $barcodeData);
+        $this->assertInstanceOf(BarcodeData::class, $barcodeData);
 
         $expectedCWs = [142,227,637,601,902,130,900,865,479,227,328,765,902,1,624,142,113,522,200,900,865,479,387,17,314,808,852,810,520,269,901,196,135,900,865,479,777,6,514,30,901,196,141,900,820,26,64,559,26,902,11,900,865,479,902,122,200,900,805,810,197,121,865,479,597,647,580,26,118,537,448,537,448,535,479,777,6,514,30,901,196,141,900,820,26,21,133,249,26,902,11,900,865,479,902,122,200,900,805,810,197,121,865,479,227,902,21,84,225,369,446,822,360,900,865,479,902,100,900,865,479,227,902,1,348,256,900,865,479,74,559,865,479,447,458,566,461,2,13,270,865,479,46,872,436,580,181,446,308,867];
 

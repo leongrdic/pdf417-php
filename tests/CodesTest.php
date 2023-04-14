@@ -2,6 +2,7 @@
 
 namespace Le\PDF417\Tests;
 
+use Exception;
 use Le\PDF417\Util\Codes;
 use PHPUnit\Framework\TestCase;
 
@@ -19,20 +20,16 @@ class CodesTest extends TestCase
 
     }
 
-    /**
-     *
-     * @return [type] [description]
-     */
     public function testInvalidCode()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('Invalid code word [0][929]');
         $this->assertSame(0x1abe0, Codes::getCode(0, 929));
     }
 
     public function testInvalidTable()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('Invalid code word [3][0]');
         $this->assertSame(0x1abe0, Codes::getCode(3, 0));
     }

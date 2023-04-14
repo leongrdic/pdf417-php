@@ -7,13 +7,13 @@ namespace Le\PDF417;
  */
 final class BarcodeData
 {
-    public $codeWords;
-    public $columns;
-    public $rows;
-    public $codes;
-    public $securityLevel;
+    public array $codeWords;
+    public int $columns;
+    public int $rows;
+    public array $codes;
+    public int $securityLevel;
 
-    public function getPixelGrid()
+    public function getPixelGrid(): array
     {
         $pixelGrid = [];
         foreach ($this->codes as $row) {

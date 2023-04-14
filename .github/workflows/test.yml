@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
 
     env:
-      extensions: gd, bcmath, fileinfo
+      extensions: dom, gd, bcmath, fileinfo, simplexml
 
     steps:
     - uses: actions/checkout@v3

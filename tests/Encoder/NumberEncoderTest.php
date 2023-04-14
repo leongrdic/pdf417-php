@@ -2,10 +2,10 @@
 
 namespace Le\PDF417\Tests\Encoder;
 
+use InvalidArgumentException;
 use Le\PDF417\Encoder\NumberEncoder;
 use PHPUnit\Framework\TestCase;
 
-#[\PHPUnit\Framework\Attributes\Group('encoders')]
 class NumberEncoderTest extends TestCase
 {
     public function testCanEncode()
@@ -53,14 +53,14 @@ class NumberEncoderTest extends TestCase
         $expected = [902, 112, 434];
         $this->assertSame($expected, $actual);
 
-        $actual = $ne->encode('01234', false);
+        $actual = $ne->encode('01234');
         $expected = [112, 434];
         $this->assertSame($expected, $actual);
     }
 
     public function testInvalidInput1()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected first parameter to be a string, array given.');
         $ne = new NumberEncoder();
         $ne->encode([], true);
@@ -68,7 +68,7 @@ class NumberEncoderTest extends TestCase
 
     public function testInvalidInput2()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('First parameter contains non-numeric characters.');
         $ne = new NumberEncoder();
         $ne->encode('foo', true);

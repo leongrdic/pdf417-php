@@ -2,6 +2,8 @@
 
 namespace Le\PDF417\Encoder;
 
+use InvalidArgumentException;
+
 /**
  * Converts numbers to code words.
  *
@@ -15,25 +17,17 @@ class NumberEncoder implements EncoderInterface
      */
     public const SWITCH_CODE_WORD = 902;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function canEncode($char)
+    public function canEncode(mixed $char): bool
     {
         return is_string($char) && 1 === preg_match('/^[0-9]$/', $char);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSwitchCode($data)
+    public function getSwitchCode(mixed $data): int
     {
         return self::SWITCH_CODE_WORD;
     }
 
     /**
-     *  {@inheritdoc}
-     *
      * The "Numeric" mode is a conversion from base 10 to base 900.
      *
      * - numbers are taken in groups of 44 (or less)
@@ -41,19 +35,19 @@ class NumberEncoder implements EncoderInterface
      *   removed by the decoding procedure)
      * - base is changed from 10 to 900
      */
-    public function encode($digits, $addSwitchCode)
+    public function encode(mixed $data, bool $addSwitchCode = false): array
     {
-        if (!is_string($digits)) {
-            $type = gettype($digits);
-            throw new \InvalidArgumentException("Expected first parameter to be a string, $type given.");
+        if (!is_string($data)) {
+            $type = gettype($data);
+            throw new InvalidArgumentException("Expected first parameter to be a string, $type given.");
         }
 
-        if (!preg_match('/^[0-9]+$/', $digits)) {
-            throw new \InvalidArgumentException('First parameter contains non-numeric characters.');
+        if (!preg_match('/^[0-9]+$/', $data)) {
+            throw new InvalidArgumentException('First parameter contains non-numeric characters.');
         }
 
         // Count the number of 44 character chunks
-        $digitCount = strlen($digits);
+        $digitCount = strlen($data);
         $chunkCount = ceil($digitCount / 44);
 
         $codeWords = [];
@@ -64,7 +58,7 @@ class NumberEncoder implements EncoderInterface
 
         // Encode in chunks of 44 digits
         for ($i = 0; $i < $chunkCount; $i++) {
-            $chunk = substr($digits, $i * 44, 44);
+            $chunk = substr($data, $i * 44, 44);
 
             $cws = $this->encodeChunk($chunk);
 
@@ -77,14 +71,14 @@ class NumberEncoder implements EncoderInterface
         return $codeWords;
     }
 
-    private function encodeChunk($chunk)
+    private function encodeChunk(string $chunk): array
     {
         $chunk = '1' . $chunk;
 
         $cws = [];
         while(bccomp($chunk, 0) > 0) {
             $cw = bcmod($chunk, 900);
-            $chunk = bcdiv($chunk, 900, 0); // Integer division
+            $chunk = bcdiv($chunk, 900); // Integer division
 
             array_unshift($cws, (int) $cw);
         }
